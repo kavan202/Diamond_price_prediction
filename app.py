@@ -8,7 +8,7 @@ import os
 # Download model file if not exists
 MODEL_PATH = "diamond_price_pred.pkl"
 if not os.path.exists(MODEL_PATH):
-    url = "https://drive.google.com/uc?id=16NKRNXv7rbV8Kyer4STixxgrA3-huNu9"
+    url= "https://drive.google.com/file/d/1T9-bO-9kbJNbiLcH-PG6k0Y6ekKrDVbq/view?usp=sharing"
     gdown.download(url, MODEL_PATH, quiet=False)
 
 # Load model
