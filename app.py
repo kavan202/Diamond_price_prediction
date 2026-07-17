@@ -8,8 +8,8 @@ import os
 # Download model file if not exists
 MODEL_PATH = "diamond_price_pred.pkl"
 if not os.path.exists(MODEL_PATH):
-    url= "https://drive.google.com/file/d/1T9-bO-9kbJNbiLcH-PG6k0Y6ekKrDVbq/view?usp=sharing"
-    gdown.download(url, MODEL_PATH, quiet=False)
+    url= "https://drive.google.com/file/d/136RK1rDwe2tlqAnYbJ7vHCfJvKOjROX1/view?usp=sharing"
+    gdown.download(url, MODEL_PATH)
 
 # Load model
 model = joblib.load(MODEL_PATH)
@@ -30,32 +30,30 @@ x = st.slider("x (Premium)", min_value=0.0, max_value=20.0, step=0.01)
 z = st.slider("z (Very Good)", min_value=0.0, max_value=40.0, step=0.01)
 y = st.slider("y (Good)", min_value=0.0, max_value=60.0, step=0.01)
 
-# Predict Button
-if st.button('Predict Price'):
-    # Create input data
-    input_data = pd.DataFrame({
-        'cut': [cut],
-        'color': [color],
-        'clarity': [clarity],
-        'carat': [carat],
-        'depth': [depth],
-        'table': [table],
-        'x (Premium)': [x],
-        'z (Very Good)': [z],
-        'y (Good)': [y]
-    })
-    
-    # Prediction
+# Prediction button
+if st.button("Predict Price", type="primary"):
+    input_data = pd.DataFrame([[cut, color, clarity, carat, depth, table, x, y, z]],
+                              columns=['cut', 'color', 'clarity', 'carat', 'depth', 'table','x (Premium)', 'y (Good)', 'z (Very Good)'])
+# Prediction
     prediction = model.predict(input_data)
-    # st.success(f"Expected Delivery Time: {prediction[0]} (minutes)")
 
-    # Prediction button
-# if st.button("Predict Price", type="primary"):
-#     input_data = pd.DataFrame([[cut, color, clarity, carat, depth, table, x, y, z]],
-#                             columns=['cut', 'color', 'clarity', 'carat', 'depth', 'table', 'x', 'y', 'z'])
+# Display result
+    st.text("Predicted Price: $ "+str(prediction))
+# # Predict Button
+# if st.button('Predict Price'):
+#     # Create input data
+#     input_data = pd.DataFrame({
+#         'cut': [cut],
+#         'color': [color],
+#         'clarity': [clarity],
+#         'carat': [carat],
+#         'depth': [depth],
+#         'table': [table],
+#         'x (Premium)': [x],
+#         'z (Very Good)': [z],
+#         'y (Good)': [y]
+#     })
     
-    # Make prediction
-    # prediction = model.predict(input_data)[0]
+    # st.success(f"Expected Delivery Time: {prediction[0]} (minutes)")
     
-    # Display result
-    st.success("Predicted Price: $ "+str(prediction))
+    
